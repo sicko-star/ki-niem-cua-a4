@@ -3,161 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kỷ niệm lớp</title>
+  <title>A2 · 2024–2027</title>
   <style>
-    :root {
-      --bg: #12131a;
-      --card: #1d1f2b;
-      --text: #f3f4f8;
-      --accent: #ff6b8b;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    .wrap {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 24px 16px 60px;
-    }
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .btn {
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 8px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .btn-pink {
-      background: var(--accent);
       color: #fff;
-      border: none;
-      font-weight: 600;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(168, 56, 178, 0.55), transparent 45%),
+        radial-gradient(circle at 75% 65%, rgba(34, 82, 168, 0.55), transparent 50%),
+        linear-gradient(135deg, #1b0c2e 0%, #120921 55%, #091329 100%);
+      overflow-x: hidden;
     }
-    .box {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(255,255,255,0.08);
+    .header {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      padding: 20px 16px 8px;
     }
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-      gap: 12px;
+    .tag {
+      font-size: 12px;
+      letter-spacing: 2px;
+      opacity: 0.85;
     }
-    .photo-card {
-      background: #151722;
-      border-radius: 12px;
-      padding: 10px;
+    h1 {
+      margin: 4px 0 0;
+      font-size: clamp(26px, 4vw, 44px);
+      font-style: italic;
+      text-shadow: 0 0 18px rgba(255, 190, 255, 0.45);
     }
-    .photo-card img {
+    .wall {
+      position: relative;
       width: 100%;
-      height: 150px;
+      min-height: 82vh;
+      padding: 20px;
+    }
+    .polaroid {
+      position: absolute;
+      background: #f7f7f9;
+      padding: 6px 6px 14px;
+      border-radius: 3px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+      transition: transform 0.2s ease, z-index 0.2s ease;
+    }
+    .polaroid:hover {
+      transform: scale(1.12) rotate(0deg) !important;
+      z-index: 20;
+    }
+    .polaroid img {
+      display: block;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 8px;
-      background: #282c3f;
+      background: #2c2440;
     }
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .form-row input {
-      flex: 1 1 180px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.15);
-      background: #12141d;
-      color: var(--text);
-    }
-    .note {
-      margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.05);
+    .student-name {
+      position: absolute;
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(18px, 2.4vw, 32px);
+      color: #fff;
+      text-shadow: 0 0 14px rgba(255, 160, 255, 0.85), 0 2px 10px rgba(0, 0, 0, 0.8);
+      pointer-events: none;
+      white-space: nowrap;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <div style="color: var(--accent); font-size: 14px;">✦ Kỷ niệm lớp ✦</div>
-        <h1 style="margin: 4px 0 0;">Lớp Của Chúng Mình</h1>
-      </div>
-      <button class="btn" id="colorBtn">⚙ Đổi màu chủ đạo</button>
-    </div>
-
-    <div class="box">
-      <h2 style="margin: 0 0 12px; font-size: 18px;">📷 Ảnh kỷ niệm</h2>
-      <div class="photo-grid">
-        <div class="photo-card">
-          <img src="anh1.jpg" alt="Ảnh kỷ niệm" onerror="this.style.opacity='0.2'" />
-          <p style="margin: 8px 0 0; font-size: 14px;">Một phần ký ức đang được thêm vào</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="box">
-      <h2 style="margin: 0 0 12px; font-size: 18px;">✦ Nhắn nhau</h2>
-      <form class="form-row" id="chatForm">
-        <input type="text" id="nameInput" placeholder="Tên bạn..." required />
-        <input type="text" id="msgInput" placeholder="Nhập lời nhắn..." required />
-        <button class="btn btn-pink" type="submit">Gửi</button>
-      </form>
-      <div id="chatList"></div>
-    </div>
+  <div class="header">
+    <div class="tag">✦ KỶ NIỆM LỚP ✦</div>
+    <h1>A4 · 2025–2028</h1>
   </div>
 
+  <div class="wall" id="wall"></div>
+
   <script>
-    const KEY = "notes_lop_hoc_v1";
-    const chatForm = document.getElementById("chatForm");
-    const chatList = document.getElementById("chatList");
+    const wall = document.getElementById("wall");
 
-    function esc(t) {
-      return t.replace(/[&<>"']/g, m => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      }[m]));
-    }
+    // Sửa danh sách tên học sinh và vị trí (x, y tính theo %)
+    const names = [
+      { text: "Trần Anh Kiều", x: 6, y: 18 },
+      { text: "Nguyễn Văn Bắc", x: 48, y: 42 },
+      { text: "...", x: 14, y: 72 }
+    ];
 
-    function render() {
-      const items = JSON.parse(localStorage.getItem(KEY) || "[]");
-      chatList.innerHTML = items
-        .map(x => `<div class="note"><strong>${esc(x.name)}:</strong> ${esc(x.msg)}</div>`)
-        .join("");
-    }
+    // Sửa tên file ảnh cho khớp với ảnh bạn bỏ vào thư mục web-lop
+    const photos = [
+      { src: "a1.jpg", x: 20, y: 8, w: 150, h: 105, rot: -6 },
+      { src: "a2.jpg", x: 76, y: 6, w: 170, h: 110, rot: 5 },
+      { src: "a3.jpg", x: 12, y: 36, w: 130, h: 115, rot: -4 },
+      { src: "a4.jpg", x: 42, y: 24, w: 165, h: 110, rot: 3 },
+      { src: "a5.jpg", x: 68, y: 28, w: 145, h: 105, rot: -5 },
+      { src: "a6.jpg", x: 28, y: 54, w: 140, h: 100, rot: 6 },
+      { src: "a7.jpg", x: 78, y: 55, w: 160, h: 110, rot: -3 },
+      { src: "a8.jpg", x: 56, y: 74, w: 185, h: 115, rot: 4 }
+    ];
 
-    chatForm.addEventListener("submit", e => {
-      e.preventDefault();
-      const name = document.getElementById("nameInput").value.trim();
-      const msg = document.getElementById("msgInput").value.trim();
-      if (!name || !msg) return;
-      const items = JSON.parse(localStorage.getItem(KEY) || "[]");
-      items.unshift({ name, msg });
-      localStorage.setItem(KEY, JSON.stringify(items));
-      chatForm.reset();
-      render();
+    photos.forEach(p => {
+      const card = document.createElement("div");
+      card.className = "polaroid";
+      card.style.left = p.x + "%";
+      card.style.top = p.y + "%";
+      card.style.width = p.w + "px";
+      card.style.height = p.h + "px";
+      card.style.transform = `rotate(${p.rot}deg)`;
+
+      const img = document.createElement("img");
+      img.src = p.src;
+      img.alt = "Kỷ niệm";
+      img.onerror = () => { img.style.opacity = "0.25"; };
+
+      card.appendChild(img);
+      wall.appendChild(card);
     });
 
-    const colors = ["#ff6b8b", "#4ea8de", "#7bd389", "#f4a261"];
-    let idx = 0;
-    document.getElementById("colorBtn").addEventListener("click", () => {
-      idx = (idx + 1) % colors.length;
-      document.documentElement.style.setProperty("--accent", colors[idx]);
+    names.forEach(n => {
+      const el = document.createElement("div");
+      el.className = "student-name";
+      el.textContent = n.text;
+      el.style.left = n.x + "%";
+      el.style.top = n.y + "%";
+      wall.appendChild(el);
     });
-
-    render();
   </script>
 </body>
 </html>
