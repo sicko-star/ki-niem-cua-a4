@@ -51,4 +51,84 @@
     .chat-box.open { display: block; }
     .chat-box input {
       width: 100%; margin-bottom: 8px; padding: 8px 10px; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.2); background: #100d1d; color
+      border: 1px solid rgba(255,255,255,.2); background: #100d1d; color: #fff;
+    }
+    .chat-box button {
+      width: 100%; padding: 8px; border: none; border-radius: 8px;
+      background: #d96bff; color: #111; font-weight: 700; cursor: pointer;
+    }
+    .msg { padding: 6px 8px; margin-top: 6px; border-radius: 8px; background: rgba(255,255,255,.08); font-size: 13px; }
+    .zoom {
+      position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.85);
+      display: none; align-items: center; justify-content: center;
+    }
+    .zoom.open { display: flex; }
+    .zoom img { max-width: 90vw; max-height: 85vh; border: 8px solid #fff; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="tag">✦ KỶ NIỆM LỚP ✦</div>
+    <h1>A4 · 2025–2028</h1>
+  </div>
+
+  <div class="wall" id="wall"></div>
+
+  <button class="chat-btn" id="btnChat">💬</button>
+  <div class="chat-box" id="boxChat">
+    <div style="font-weight:700;margin-bottom:8px">Nhắn nhau ✦</div>
+    <form id="fChat">
+      <input id="nIn" placeholder="Tên của bạn..." required />
+      <input id="mIn" placeholder="Viết lời nhắn..." required />
+      <button type="submit">Gửi</button>
+    </form>
+    <div id="lChat" style="max-height:150px;overflow-y:auto"></div>
+  </div>
+
+  <div class="zoom" id="zoom"><img id="zoomImg" src="" /></div>
+
+  <script>
+    const wall = document.getElementById("wall");
+    const gvs = [
+      { t: "Trần Thị Anh Kiều", x: 5, y: 18 },
+      { t: "Nguyễn Văn Bắc", x: 47, y: 44 },
+      { t: "...", x: 16, y: 72 }
+    ];
+    const pics = [
+      { s: "anh1.jpg", kieu: "ngang",     x: 20, y: 4,  r: -5 },
+      { s: "anh2.jpg", kieu: "doc",       x: 38, y: 12, r: 4  },
+      { s: "anh3.jpg", kieu: "ngang-lon", x: 74, y: 3,  r: 3  },
+      { s: "anh4.jpg", kieu: "doc",       x: 6,  y: 34, r: -4 },
+      { s: "anh5.jpg", kieu: "vuong",     x: 22, y: 44, r: 5  }
+    ];
+    const zoom = document.getElementById("zoom"), zoomImg = document.getElementById("zoomImg");
+    pics.forEach(p => {
+      const d = document.createElement("div");
+      d.className = "card " + p.kieu;
+      d.style.cssText = `left:${p.x}%;top:${p.y}%;transform:rotate(${p.r}deg)`;
+      const i = document.createElement("img");
+      i.src = p.s;
+      i.onerror = () => i.style.opacity = ".25";
+      d.onclick = () => { zoomImg.src = i.src; zoom.classList.add("open"); };
+      d.appendChild(i); wall.appendChild(d);
+    });
+    zoom.onclick = () => zoom.classList.remove("open");
+    gvs.forEach(g => {
+      const e = document.createElement("div");
+      e.className = "gv"; e.textContent = g.t;
+      e.style.left = g.x + "%"; e.style.top = g.y + "%";
+      wall.appendChild(e);
+    });
+    document.getElementById("btnChat").onclick = () => document.getElementById("boxChat").classList.toggle("open");
+    const K = "a4_msg_v1", f = document.getElementById("fChat"), l = document.getElementById("lChat");
+    const show = () => l.innerHTML = JSON.parse(localStorage.getItem(K) || "[]").map(x => `<div class="msg"><b>${x.n}:</b> ${x.m}</div>`).join("");
+    f.onsubmit = e => {
+      e.preventDefault();
+      const arr = JSON.parse(localStorage.getItem(K) || "[]");
+      arr.unshift({ n: document.getElementById("nIn").value, m: document.getElementById("mIn").value });
+      localStorage.setItem(K, JSON.stringify(arr)); f.reset(); show();
+    };
+    show();
+  </script>
+</body>
+</html>
