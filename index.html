@@ -23,6 +23,8 @@
       text-shadow: 0 0 18px rgba(255,185,255,.55);
     }
     .wall { position: relative; width: 100%; height: calc(100vh - 100px); min-height: 600px; }
+
+    /* Các kiểu khung ảnh polaroid */
     .card {
       position: absolute; background: #f5f5f7; padding: 6px 6px 15px; border-radius: 3px;
       box-shadow: 0 10px 26px rgba(0,0,0,.5); cursor: pointer; transition: .22s ease;
@@ -31,8 +33,10 @@
     .card.ngang-lon { width: 230px; height: 150px; }
     .card.doc       { width: 125px; height: 180px; }
     .card.vuong     { width: 145px; height: 145px; }
+
     .card:hover { transform: scale(1.16) rotate(0deg) !important; z-index: 30 !important; }
     .card img { display: block; width: 100%; height: 100%; object-fit: cover; background: #281e3c; }
+
     .gv {
       position: absolute; z-index: 15; font-family: "Dancing Script", cursive; font-weight: 700;
       font-size: clamp(24px, 2.8vw, 38px); white-space: nowrap; pointer-events: none;
@@ -89,18 +93,28 @@
 
   <script>
     const wall = document.getElementById("wall");
+
+    // Tên giáo viên nổi trên nền
     const gvs = [
       { t: "Trần Thị Anh Kiều", x: 5, y: 18 },
       { t: "Nguyễn Văn Bắc", x: 47, y: 44 },
       { t: "...", x: 16, y: 72 }
     ];
+
+    // kieu có 4 loại: "ngang", "ngang-lon", "doc", "vuong"
     const pics = [
-      { s: "anh1.jpg", kieu: "ngang",     x: 20, y: 4,  r: -5 },
-      { s: "anh2.jpg", kieu: "doc",       x: 38, y: 12, r: 4  },
-      { s: "anh3.jpg", kieu: "ngang-lon", x: 74, y: 3,  r: 3  },
-      { s: "anh4.jpg", kieu: "doc",       x: 6,  y: 34, r: -4 },
-      { s: "anh5.jpg", kieu: "vuong",     x: 22, y: 44, r: 5  }
+      { s: "anh1.jpg.jpg", kieu: "ngang",     x: 20, y: 4,  r: -5 },
+      { s: "anh1.jpg.jpg", kieu: "doc",       x: 38, y: 12, r: 4  },
+      { s: "anh1.jpg.jpg", kieu: "ngang-lon", x: 74, y: 3,  r: 3  },
+      { s: "anh1.jpg.jpg", kieu: "doc",       x: 6,  y: 34, r: -4 },
+      { s: "anh1.jpg.jpg", kieu: "vuong",     x: 22, y: 44, r: 5  },
+      { s: "anh1.jpg.jpg", kieu: "ngang",     x: 64, y: 24, r: -3 },
+      { s: "anh1.jpg.jpg", kieu: "doc",       x: 82, y: 36, r: 4  },
+      { s: "anh1.jpg.jpg", kieu: "ngang-lon", x: 52, y: 66, r: -2 },
+      { s: "anh1.jpg.jpg", kieu: "vuong",     x: 35, y: 68, r: 6  },
+      { s: "anh1.jpg.jpg", kieu: "ngang",     x: 4,  y: 74, r: -5 }
     ];
+
     const zoom = document.getElementById("zoom"), zoomImg = document.getElementById("zoomImg");
     pics.forEach(p => {
       const d = document.createElement("div");
@@ -112,13 +126,16 @@
       d.onclick = () => { zoomImg.src = i.src; zoom.classList.add("open"); };
       d.appendChild(i); wall.appendChild(d);
     });
+
     zoom.onclick = () => zoom.classList.remove("open");
+
     gvs.forEach(g => {
       const e = document.createElement("div");
       e.className = "gv"; e.textContent = g.t;
       e.style.left = g.x + "%"; e.style.top = g.y + "%";
       wall.appendChild(e);
     });
+
     document.getElementById("btnChat").onclick = () => document.getElementById("boxChat").classList.toggle("open");
     const K = "a4_msg_v1", f = document.getElementById("fChat"), l = document.getElementById("lChat");
     const show = () => l.innerHTML = JSON.parse(localStorage.getItem(K) || "[]").map(x => `<div class="msg"><b>${x.n}:</b> ${x.m}</div>`).join("");
