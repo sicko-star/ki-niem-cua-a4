@@ -3,73 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A2 · 2024–2027</title>
+  <title>A4 · 2025–2028</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, sans-serif;
-      color: #fff;
-      background:
-        radial-gradient(circle at 20% 25%, rgba(168, 56, 178, 0.55), transparent 45%),
-        radial-gradient(circle at 75% 65%, rgba(34, 82, 168, 0.55), transparent 50%),
-        linear-gradient(135deg, #1b0c2e 0%, #120921 55%, #091329 100%);
+      margin: 0; min-height: 100vh; color: #fff;
+      font-family: "Be Vietnam Pro", sans-serif;
+      background: radial-gradient(circle at 20% 25%, rgba(164,52,176,.55), transparent 45%),
+                  radial-gradient(circle at 80% 70%, rgba(28,78,166,.55), transparent 50%),
+                  linear-gradient(135deg, #1b0c2e, #110820 55%, #081226);
       overflow-x: hidden;
     }
-    .header {
-      position: relative;
-      z-index: 5;
-      text-align: center;
-      padding: 20px 16px 8px;
-    }
-    .tag {
-      font-size: 12px;
-      letter-spacing: 2px;
-      opacity: 0.85;
-    }
+    .header { text-align: center; padding: 18px 12px 4px; position: relative; z-index: 10; }
+    .tag { font-size: 11px; letter-spacing: 2.5px; opacity: .85; font-weight: 600; }
     h1 {
-      margin: 4px 0 0;
-      font-size: clamp(26px, 4vw, 44px);
-      font-style: italic;
-      text-shadow: 0 0 18px rgba(255, 190, 255, 0.45);
+      margin: 4px 0 0; font-family: "Dancing Script", cursive;
+      font-size: clamp(32px, 4.5vw, 52px);
+      text-shadow: 0 0 18px rgba(255,185,255,.55);
     }
-    .wall {
-      position: relative;
-      width: 100%;
-      min-height: 82vh;
-      padding: 20px;
+    .wall { position: relative; width: 100%; height: calc(100vh - 100px); min-height: 600px; }
+
+    /* Các kiểu khung ảnh polaroid */
+    .card {
+      position: absolute; background: #f5f5f7; padding: 6px 6px 15px; border-radius: 3px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.5); cursor: pointer; transition: .22s ease;
     }
-    .polaroid {
-      position: absolute;
-      background: #f7f7f9;
-      padding: 6px 6px 14px;
-      border-radius: 3px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-      transition: transform 0.2s ease, z-index 0.2s ease;
+    .card.ngang     { width: 185px; height: 125px; }
+    .card.ngang-lon { width: 230px; height: 150px; }
+    .card.doc       { width: 125px; height: 180px; }
+    .card.vuong     { width: 145px; height: 145px; }
+
+    .card:hover { transform: scale(1.16) rotate(0deg) !important; z-index: 30 !important; }
+    .card img { display: block; width: 100%; height: 100%; object-fit: cover; background: #281e3c; }
+
+    .gv {
+      position: absolute; z-index: 15; font-family: "Dancing Script", cursive; font-weight: 700;
+      font-size: clamp(24px, 2.8vw, 38px); white-space: nowrap; pointer-events: none;
+      text-shadow: 0 0 12px rgba(255,150,255,.9), 0 0 24px rgba(200,110,255,.65);
     }
-    .polaroid:hover {
-      transform: scale(1.12) rotate(0deg) !important;
-      z-index: 20;
+    .chat-btn {
+      position: fixed; right: 16px; bottom: 16px; z-index: 50; width: 44px; height: 44px;
+      border-radius: 50%; border: 1px solid rgba(255,255,255,.25);
+      background: rgba(20,16,36,.85); color: #fff; font-size: 18px; cursor: pointer;
     }
-    .polaroid img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      background: #2c2440;
+    .chat-box {
+      position: fixed; right: 16px; bottom: 68px; z-index: 50; width: 300px;
+      background: rgba(22,18,40,.95); border: 1px solid rgba(255,255,255,.16);
+      border-radius: 14px; padding: 14px; display: none;
     }
-    .student-name {
-      position: absolute;
-      font-family: Georgia, "Times New Roman", serif;
-      font-style: italic;
-      font-weight: 700;
-      font-size: clamp(18px, 2.4vw, 32px);
-      color: #fff;
-      text-shadow: 0 0 14px rgba(255, 160, 255, 0.85), 0 2px 10px rgba(0, 0, 0, 0.8);
-      pointer-events: none;
-      white-space: nowrap;
+    .chat-box.open { display: block; }
+    .chat-box input {
+      width: 100%; margin-bottom: 8px; padding: 8px 10px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.2); background: #100d1d; color: #fff;
     }
+    .chat-box button {
+      width: 100%; padding: 8px; border: none; border-radius: 8px;
+      background: #d96bff; color: #111; font-weight: 700; cursor: pointer;
+    }
+    .msg { padding: 6px 8px; margin-top: 6px; border-radius: 8px; background: rgba(255,255,255,.08); font-size: 13px; }
+    .zoom {
+      position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.85);
+      display: none; align-items: center; justify-content: center;
+    }
+    .zoom.open { display: flex; }
+    .zoom img { max-width: 90vw; max-height: 85vh; border: 8px solid #fff; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -80,54 +78,74 @@
 
   <div class="wall" id="wall"></div>
 
+  <button class="chat-btn" id="btnChat">💬</button>
+  <div class="chat-box" id="boxChat">
+    <div style="font-weight:700;margin-bottom:8px">Nhắn nhau ✦</div>
+    <form id="fChat">
+      <input id="nIn" placeholder="Tên của bạn..." required />
+      <input id="mIn" placeholder="Viết lời nhắn..." required />
+      <button type="submit">Gửi</button>
+    </form>
+    <div id="lChat" style="max-height:150px;overflow-y:auto"></div>
+  </div>
+
+  <div class="zoom" id="zoom"><img id="zoomImg" src="" /></div>
+
   <script>
     const wall = document.getElementById("wall");
 
-    // Sửa danh sách tên học sinh và vị trí (x, y tính theo %)
-    const names = [
-      { text: "Trần Anh Kiều", x: 6, y: 18 },
-      { text: "Nguyễn Văn Bắc", x: 48, y: 42 },
-      { text: "...", x: 14, y: 72 }
+    // Tên giáo viên nổi trên nền
+    const gvs = [
+      { t: "Trần Thị Anh Kiều", x: 5, y: 18 },
+      { t: "Nguyễn Văn Bắc", x: 47, y: 44 },
+      { t: "...", x: 16, y: 72 }
     ];
 
-    // Sửa tên file ảnh cho khớp với ảnh bạn bỏ vào thư mục web-lop
-    const photos = [
-      { src: "a1.jpg", x: 20, y: 8, w: 150, h: 105, rot: -6 },
-      { src: "a2.jpg", x: 76, y: 6, w: 170, h: 110, rot: 5 },
-      { src: "a3.jpg", x: 12, y: 36, w: 130, h: 115, rot: -4 },
-      { src: "a4.jpg", x: 42, y: 24, w: 165, h: 110, rot: 3 },
-      { src: "a5.jpg", x: 68, y: 28, w: 145, h: 105, rot: -5 },
-      { src: "a6.jpg", x: 28, y: 54, w: 140, h: 100, rot: 6 },
-      { src: "a7.jpg", x: 78, y: 55, w: 160, h: 110, rot: -3 },
-      { src: "a8.jpg", x: 56, y: 74, w: 185, h: 115, rot: 4 }
+    // kieu có 4 loại: "ngang", "ngang-lon", "doc", "vuong"
+    const pics = [
+      { s: "anh1.jpg.jpg", kieu: "ngang",     x: 20, y: 4,  r: -5 },
+      { s: "anh1.jpg.jpg", kieu: "doc",       x: 38, y: 12, r: 4  },
+      { s: "anh1.jpg.jpg", kieu: "ngang-lon", x: 74, y: 3,  r: 3  },
+      { s: "anh1.jpg.jpg", kieu: "doc",       x: 6,  y: 34, r: -4 },
+      { s: "anh1.jpg.jpg", kieu: "vuong",     x: 22, y: 44, r: 5  },
+      { s: "anh1.jpg.jpg", kieu: "ngang",     x: 64, y: 24, r: -3 },
+      { s: "anh1.jpg.jpg", kieu: "doc",       x: 82, y: 36, r: 4  },
+      { s: "anh1.jpg.jpg", kieu: "ngang-lon", x: 52, y: 66, r: -2 },
+      { s: "anh1.jpg.jpg", kieu: "vuong",     x: 35, y: 68, r: 6  },
+      { s: "anh1.jpg.jpg", kieu: "ngang",     x: 4,  y: 74, r: -5 }
     ];
 
-    photos.forEach(p => {
-      const card = document.createElement("div");
-      card.className = "polaroid";
-      card.style.left = p.x + "%";
-      card.style.top = p.y + "%";
-      card.style.width = p.w + "px";
-      card.style.height = p.h + "px";
-      card.style.transform = `rotate(${p.rot}deg)`;
-
-      const img = document.createElement("img");
-      img.src = p.src;
-      img.alt = "Kỷ niệm";
-      img.onerror = () => { img.style.opacity = "0.25"; };
-
-      card.appendChild(img);
-      wall.appendChild(card);
+    const zoom = document.getElementById("zoom"), zoomImg = document.getElementById("zoomImg");
+    pics.forEach(p => {
+      const d = document.createElement("div");
+      d.className = "card " + p.kieu;
+      d.style.cssText = `left:${p.x}%;top:${p.y}%;transform:rotate(${p.r}deg)`;
+      const i = document.createElement("img");
+      i.src = p.s;
+      i.onerror = () => i.style.opacity = ".25";
+      d.onclick = () => { zoomImg.src = i.src; zoom.classList.add("open"); };
+      d.appendChild(i); wall.appendChild(d);
     });
 
-    names.forEach(n => {
-      const el = document.createElement("div");
-      el.className = "student-name";
-      el.textContent = n.text;
-      el.style.left = n.x + "%";
-      el.style.top = n.y + "%";
-      wall.appendChild(el);
+    zoom.onclick = () => zoom.classList.remove("open");
+
+    gvs.forEach(g => {
+      const e = document.createElement("div");
+      e.className = "gv"; e.textContent = g.t;
+      e.style.left = g.x + "%"; e.style.top = g.y + "%";
+      wall.appendChild(e);
     });
+
+    document.getElementById("btnChat").onclick = () => document.getElementById("boxChat").classList.toggle("open");
+    const K = "a4_msg_v1", f = document.getElementById("fChat"), l = document.getElementById("lChat");
+    const show = () => l.innerHTML = JSON.parse(localStorage.getItem(K) || "[]").map(x => `<div class="msg"><b>${x.n}:</b> ${x.m}</div>`).join("");
+    f.onsubmit = e => {
+      e.preventDefault();
+      const arr = JSON.parse(localStorage.getItem(K) || "[]");
+      arr.unshift({ n: document.getElementById("nIn").value, m: document.getElementById("mIn").value });
+      localStorage.setItem(K, JSON.stringify(arr)); f.reset(); show();
+    };
+    show();
   </script>
 </body>
 </html>
